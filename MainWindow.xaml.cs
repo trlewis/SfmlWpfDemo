@@ -1,24 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-
-namespace SfmlWpfDemo
+﻿namespace SfmlWpfDemo
 {
     using SFML.Graphics;
     using SFML.System;
     using SFML.Window;
-
+    using System;
+    using System.Windows;
     using System.Windows.Threading;
 
     /// <summary>
@@ -45,6 +31,11 @@ namespace SfmlWpfDemo
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            this.ChangeCircleColor();
+        }
+
+        private void ChangeCircleColor()
+        {
             var rand = new Random();
             var color = new Color((byte)rand.Next(), (byte)rand.Next(), (byte)rand.Next());
             this._circle.FillColor = color;
@@ -61,9 +52,16 @@ namespace SfmlWpfDemo
             var context = new ContextSettings { DepthBits = 24 };
             this._renderWindow = new RenderWindow(this.DrawSurface.Handle, context);
             this._renderWindow.MouseButtonPressed += RenderWindow_MouseButtonPressed;
+            this._renderWindow.KeyPressed += RenderWindow_KeyPressed;
+            this._renderWindow.SetActive(true);
         }
 
-        void RenderWindow_MouseButtonPressed(object sender, MouseButtonEventArgs e)
+        private void RenderWindow_KeyPressed(object sender, KeyEventArgs e)
+        {
+            this.ChangeCircleColor();
+        }
+
+        private void RenderWindow_MouseButtonPressed(object sender, MouseButtonEventArgs e)
         {
             this._circle.Position = new Vector2f(e.X, e.Y);
         }
@@ -75,6 +73,7 @@ namespace SfmlWpfDemo
 
         private void Timer_Tick(object sender, EventArgs e)
         {
+            //System.Windows.Forms.Application.DoEvents(); //doesn't seem to help.
  	        this._renderWindow.DispatchEvents();
 
             this._renderWindow.Clear(new Color((byte)this._color, (byte)this._color, (byte)this._color));
