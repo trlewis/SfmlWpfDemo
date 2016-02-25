@@ -1,0 +1,26 @@
+﻿<Window x:Class="SfmlWpfDemo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:sfmlWpfDemo="clr-namespace:SfmlWpfDemo"
+        Title="SFML + WPF Demo" Height="350" Width="525">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <WindowsFormsHost Grid.Row="0">
+            <WindowsFormsHost.Child>
+                <sfmlWpfDemo:SfmlDrawingSurface x:Name="DrawSurface" SizeChanged="DrawSurface_SizeChanged"/>
+            </WindowsFormsHost.Child>
+        </WindowsFormsHost>
+        
+        <StackPanel Grid.Row="1" Margin="4">
+            <TextBlock>Click drawing area to move circle.</TextBlock>
+            <Button Content="Change Circle Color"
+                    HorizontalAlignment="Left"
+                    Margin="0 4"
+                    Click="Button_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>
